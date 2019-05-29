@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SaleMachine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lab1</a> &gt; <a href="index.source.html" class="el_package">cn.edu.bjut.software.test.part1</a> &gt; <span class="el_source">SaleMachine.java</span></div><h1>SaleMachine.java</h1><pre class="source lang-java linenums">package cn.edu.bjut.software.test.part1;
+
+public class SaleMachine {
+	private int countOfBeer, countOfOrangeJuice, countOfFiveCents, countOfOneDollar;
+<span class="fc" id="L5">	private String[] typeOfGoods = { &quot;Beer&quot;, &quot;OrangeJuice&quot; };</span>
+	private String resultOfDeal;
+
+<span class="fc" id="L8">	public SaleMachine() {</span>
+<span class="fc" id="L9">		initial();</span>
+<span class="fc" id="L10">	}</span>
+
+	private void initial() {
+<span class="fc" id="L13">		countOfBeer = 6;</span>
+<span class="fc" id="L14">		countOfOrangeJuice = 6;</span>
+<span class="fc" id="L15">		countOfFiveCents = 6;</span>
+<span class="fc" id="L16">		countOfOneDollar = 6;</span>
+<span class="fc" id="L17">	}</span>
+
+	public SaleMachine(int fiveCents, int oneDollar, int numOfBeer, int numOfOrange)
+	// 便于测试的初始化函数
+<span class="fc" id="L21">	{</span>
+<span class="fc" id="L22">		countOfFiveCents = fiveCents;</span>
+<span class="fc" id="L23">		countOfOneDollar = oneDollar;</span>
+<span class="fc" id="L24">		countOfBeer = numOfBeer;</span>
+<span class="fc" id="L25">		countOfOrangeJuice = numOfOrange;</span>
+<span class="fc" id="L26">	}</span>
+
+	public String currentState() {
+<span class="fc" id="L29">		String state = &quot;Current State\n&quot; +</span>
+				&quot;Beer:&quot; + countOfBeer + &quot;\n&quot; +
+				&quot;Orange Juice:&quot;+ countOfOrangeJuice + &quot;\n&quot; +
+				&quot;5 Cents:&quot; + countOfFiveCents + &quot;\n&quot; +
+				&quot;1 Dollar:&quot;+ countOfOneDollar;
+<span class="fc" id="L34">		return state;</span>
+	}
+
+	public String operation(String type, String money)
+	// type是用户选择的产品，money是用户投币种类
+	{
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if (money.equalsIgnoreCase(&quot;5C&quot;)) // 如果用户投入5角钱</span>
+		{
+<span class="fc bfc" id="L42" title="All 2 branches covered.">			if (type.equals(typeOfGoods[0])) // 如果用户选择啤酒</span>
+			{
+<span class="fc bfc" id="L44" title="All 2 branches covered.">				if (countOfBeer &gt; 0) // 如果还有啤酒</span>
+				{
+<span class="fc" id="L46">					countOfBeer--;</span>
+<span class="fc" id="L47">					countOfFiveCents++;</span>
+<span class="fc" id="L48">					resultOfDeal = &quot;Input Information\n&quot; + &quot;Type: Beer;  Money: 5 Cents;  Change: 0\n\n&quot;</span>
+<span class="fc" id="L49">							+ currentState();</span>
+<span class="fc" id="L50">					return resultOfDeal;</span>
+				} else {
+<span class="fc" id="L52">					resultOfDeal = &quot;Failure Information\n&quot; + &quot;Beer Shortage&quot;;</span>
+<span class="fc" id="L53">					return resultOfDeal;</span>
+				}
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			} else if (type.equals(typeOfGoods[1])) // 如果用户选择橙汁</span>
+			{
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				if (countOfOrangeJuice &gt; 0) {</span>
+<span class="fc" id="L58">					countOfOrangeJuice--;</span>
+<span class="fc" id="L59">					countOfFiveCents++;</span>
+<span class="fc" id="L60">					resultOfDeal = &quot;Input Information\n&quot; + &quot;Type: OrangeJuice;   Money: 5 Cents;   Change: 0\n\n&quot;</span>
+<span class="fc" id="L61">							+ currentState();</span>
+<span class="fc" id="L62">					return resultOfDeal;</span>
+				} else {
+<span class="fc" id="L64">					resultOfDeal = &quot;Failure Information\n&quot; + &quot;OrangeJuice Shortage&quot;;</span>
+<span class="fc" id="L65">					return resultOfDeal;</span>
+				}
+			} else {
+<span class="fc" id="L68">				resultOfDeal = &quot;Failure Information\n&quot; + &quot;Type Error&quot;;</span>
+<span class="fc" id="L69">				return resultOfDeal;</span>
+			}
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		} else if (money.equalsIgnoreCase(&quot;1D&quot;)) // 如果用户投入一元钱</span>
+		{
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (countOfFiveCents &gt; 0) // 如果有零钱找</span>
+			{
+<span class="fc bfc" id="L75" title="All 4 branches covered.">				if (type.equals(typeOfGoods[0]) &amp;&amp; countOfBeer &gt; 0) // 如果用户选择啤酒且还有啤酒</span>
+				{
+<span class="fc" id="L77">					countOfBeer--;</span>
+<span class="fc" id="L78">					countOfFiveCents--;</span>
+<span class="fc" id="L79">					countOfOneDollar++;</span>
+<span class="fc" id="L80">					resultOfDeal = &quot;Input Information\n&quot; + &quot;Type: Beer;   Money: 1 Dollar;   Change: 5 Cents\n\n&quot;</span>
+<span class="fc" id="L81">							+ currentState();</span>
+<span class="fc" id="L82">					return resultOfDeal;</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">				} else if (type.equals(typeOfGoods[1]) &amp;&amp; countOfOrangeJuice &gt; 0)</span>
+				// 如果用户选择橙汁且还有橙汁
+				{
+<span class="fc" id="L86">					countOfOrangeJuice--;</span>
+<span class="fc" id="L87">					countOfFiveCents--;</span>
+<span class="fc" id="L88">					countOfOneDollar++;</span>
+<span class="fc" id="L89">					resultOfDeal = &quot;Input Information\n&quot; + &quot;Type: OrangeJuice;  Money: 1 Dollar;  Change: 5 Cents\n\n&quot;</span>
+<span class="fc" id="L90">							+ currentState();</span>
+<span class="fc" id="L91">					return resultOfDeal;</span>
+				} else {
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">					if (type.equals(typeOfGoods[0]) &amp;&amp; countOfBeer &lt;= 0) {</span>
+<span class="fc" id="L94">						resultOfDeal = &quot;Failure Information\n&quot; + &quot;Beer Shortage&quot;;</span>
+<span class="fc" id="L95">						return resultOfDeal;</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">					} else if (type.equals(typeOfGoods[1]) &amp;&amp; countOfOrangeJuice &lt;= 0) {</span>
+<span class="fc" id="L97">						resultOfDeal = &quot;Failure Information\n&quot; + &quot;OrangeJuice Shortage&quot;;</span>
+<span class="fc" id="L98">						return resultOfDeal;</span>
+					} else {
+<span class="fc" id="L100">						resultOfDeal = &quot;Failure Information\n&quot; + &quot;Type Error&quot;;</span>
+<span class="fc" id="L101">						return resultOfDeal;</span>
+					}
+				}
+			} else {
+<span class="fc" id="L105">				resultOfDeal = &quot;Failure Information\n&quot; + &quot;Change Shortage&quot;;</span>
+<span class="fc" id="L106">				return resultOfDeal;</span>
+			}
+		} else {
+<span class="fc" id="L109">			resultOfDeal = &quot;Failure Information\n&quot; + &quot;Money Error&quot;;</span>
+<span class="fc" id="L110">			return resultOfDeal;</span>
+		}
+	}
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
